@@ -1,10 +1,45 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap");
 body {
   margin: 0;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+.modal-wrapper {
+  background-color: rgba(0, 0, 0, 0.178);
+  backdrop-filter: blur(2px);
+  position: absolute;
+  inset: 0;
+  min-height: 100vh;
+  min-width: 100vw;
+}
+.event-modal,
+.product-preview {
+  max-width: 90vw;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--grey-color);
+  box-shadow: 0 10px 30px 0px rgba(150, 135, 129, 0.581);
+}
+.product-preview{
+  width: 90vw;
+}
+.preview-img{
+  height: 16rem;
+  width: 100%;
+  object-fit: cover;
+}
+@media (min-width: 648px) {
+  .event-modal {
+    max-width: 20rem;
+  }
+  .product-preview {
+    width: 22rem;
+  }
 }

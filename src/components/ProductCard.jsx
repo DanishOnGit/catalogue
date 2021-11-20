@@ -3,11 +3,11 @@ export const ProductCard = ({ item }) => {
     <>
       <div>
         <div>
-          <img src={item.src} alt="" />
+          <img className="preview-img" src={item?.src} alt="product-pic" />
         </div>
         <div>
-          <p className="font-bold">{item.name}</p>
-          <p>{item.description}</p>
+          <p className="font-bold">{item?.title}</p>
+          <p>{item?.description}</p>
         </div>
       </div>
     </>
