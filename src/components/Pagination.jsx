@@ -11,7 +11,7 @@ export const Pagination = ({
     pageNumbers.push(i);
   }
   return (
-    <div>
+    <div className="my-4">
       <ul className="flex">
         {pageNumbers.map((number) => (
           <li

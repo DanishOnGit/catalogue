@@ -33,22 +33,19 @@ export const AddProduct = ({
     ]);
     resetForm();
   };
-  useEffect(()=> titleRef.current.focus(),[])
+  useEffect(() => titleRef.current.focus(), []);
 
   useEffect(() => {
     if (productImage) {
-      console.log("in useffect if block",productImage)
       const reader = new FileReader();
       reader.readAsDataURL(productImage); //base 64 string
       reader.onloadend = () => {
         setImagePreview(reader.result);
       };
-      // console.log({ reader });
     } else {
-      console.log('in ueffect else block')
       setImagePreview(null);
     }
-    // console.log({ productImage, imagePreview });
+
     // eslint-disable-next-line
   }, [productImage, imagePreview]);
 
@@ -65,12 +62,14 @@ export const AddProduct = ({
         <div
           className={
             showModal
-              ? "event-modal bg-white bg-opacity-80 block p-4 p sm:mx-4 w-full rounded-3xl text-center"
+              ? "event-modal bg-white bg-opacity-80 block p-4 p sm:mx-4 w-full rounded-3xl"
               : "hidden p-2 mx-2 sm:mx-4 event-modal max-w-xs w-full"
           }
         >
-          <h2 className="mb-4">Add Product</h2>
+          <h2 className="mb-4 text-center font-bold text-xl">Add Product</h2>
+          <label htmlFor="itemTitle">Title:</label>
           <input
+            id="itemTitle"
             ref={titleRef}
             value={title}
             className="px-2 py-3 my-2 block w-full focus:ring-blue-800 focus:ring-2 focus:outline-none rounded-lg"
@@ -78,8 +77,9 @@ export const AddProduct = ({
             placeholder="Title"
             onChange={(e) => setTitle(e.target.value)}
           />
-
+          <label htmlFor="itemDescription">Description:</label>
           <input
+            id="itemDescription"
             value={description}
             className="px-2 py-3 my-2 block w-full focus:ring-blue-800 focus:ring-2 focus:outline-none rounded-lg"
             type="text"
@@ -89,36 +89,52 @@ export const AddProduct = ({
           {!imagePreview && (
             <button
               onClick={() => inputRef.current.click()}
-              className="bg-blue-800 block px-5 py-2 mt-5 text-white rounded-lg"
+              className="bg-blue-800 hover:bg-blue-900 transition duration-150 ease-in-out block px-5 py-2 mt-5 text-white rounded-lg"
             >
-              Add image
+              <div className="flex items-center justify-center">
+                <svg
+                  class="w-6 h-6 inline-block"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+                Add Image
+              </div>
             </button>
           )}
           <input
             ref={inputRef}
             onChange={(e) => {
               const file = e.target.files[0];
-              console.log("loggin e.trget.files",e.target.value)
+
               if (file && file.type.substr(0, 5) === "image") {
-                console.log(" file input if block")
                 setProductImage(e.target.files[0]);
               } else {
-                console.log(" file input else block")
-
                 setProductImage(null);
               }
-              e.target.value=null
+              e.target.value = null;
             }}
             type="file"
             accept="image/*"
             className="hidden px-2 py-3 my-2 w-full focus:ring-blue-800 focus:ring-2 focus:outline-none rounded-lg"
           />
           {imagePreview && (
-            <button onClick={() => setCardPreview(true)}>show preview</button>
+            <button
+              className="border border-blue-800 text-blue-800 my-2 rounded-lg p-2 w-full"
+              onClick={() => setCardPreview(true)}
+            >
+              show preview
+            </button>
           )}
           <button
             onClick={addToCatalogue}
-            className="bg-blue-800 block px-5 py-2 mt-5 text-white rounded-lg min-w-full"
+            className="bg-blue-800 hover:bg-blue-900 transition duration-150 ease-in-out block px-5 py-2 mt-5 text-white rounded-lg min-w-full"
           >
             Done
           </button>

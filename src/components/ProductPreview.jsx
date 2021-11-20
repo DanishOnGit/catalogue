@@ -9,15 +9,15 @@ export const ProductPreview = ({ item, showCardPreview, setCardPreview }) => {
         }
         onClick={() => setCardPreview(false)}
       >
-        <h1 className="text-center">Preview</h1>
+        <h1 className="text-center font-bold text-xl mb-4">Product preview</h1>
         <div>
-          <img className="rounded-lg preview-img" src={item?.src} alt="" />
+          <img className="rounded-lg preview-img mb-2" src={item?.src} alt="" />
         </div>
         <div>
-          <p className="font-bold">{item?.title}</p>
+          <p className="font-bold mb-3 sm:mb-4">{item?.title}</p>
           <p>{item?.description}</p>
         </div>
-        <button className="absolute top-2 right-3">X</button>
+        {/* <button className="absolute top-2 right-3">X</button> */}
       </div>
     </>
   );
