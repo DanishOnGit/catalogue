@@ -34,14 +34,13 @@ export const AddProduct = ({
     resetForm();
   };
   const handleImageInput = (e) => {
-   
     const files = e.target.files; //its iterable but not array
 
     if (files) {
       const fileArray = Array.from(files).map((file) =>
         URL.createObjectURL(file)
       );
-      
+
       setProductImage((prevImages) => prevImages.concat(fileArray));
       Array.from(files).map((file) => URL.revokeObjectURL(file));
       setChoosingFile(true);
@@ -52,6 +51,15 @@ export const AddProduct = ({
     e.target.value = null;
   };
 
+  const handleImageDrop = (e) => {
+    console.log("File(s) dropped");
+    // Prevent default behavior (Prevent file from being opened)
+    e.preventDefault();
+    if (e.dataTransfer.items) {
+      console.log("dataTransfer", e.dataTransfer.items);
+    }
+  };
+
   useEffect(() => titleRef.current.focus(), []);
 
   useEffect(() => {
@@ -59,8 +67,8 @@ export const AddProduct = ({
       const newPage = Math.ceil(productList.length / itemsPerPage);
       setCurrentPage(newPage);
     }
-    // eslint-disable-next-line
-  }, [productList]);
+  
+  }, [productList,itemsPerPage,setCurrentPage]);
   return (
     <>
       <div className={showModal ? "modal-wrapper" : "hidden"}>
@@ -122,6 +130,13 @@ export const AddProduct = ({
             accept="image/*"
             className="hidden px-2 py-3 my-2 w-full focus:ring-blue-800 focus:ring-2 focus:outline-none rounded-lg"
           />
+          <p className="text-center my-3">-----OR-----</p>
+          <div
+            onDrop={(e) => handleImageDrop(e)}
+            className="w-full h-20 bg-indigo-50 flex items-center justify-center rounded-lg"
+          >
+            <p className="text-gray-400">Drop images</p>
+          </div>
           {choosingFile && (
             <button
               className="border border-blue-800 text-blue-800 my-2 rounded-lg p-2 w-full"
