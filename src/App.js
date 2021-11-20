@@ -1,6 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
-import { useEffect } from "react/cjs/react.development";
+import { useEffect, useState } from "react";
 import { AddProduct } from "./components/AddProduct";
 import { Catalogue } from "./components/Catalogue";
 import { Pagination } from "./components/Pagination";
