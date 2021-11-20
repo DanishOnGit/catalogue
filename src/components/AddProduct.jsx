@@ -22,14 +22,16 @@ export const AddProduct = ({ showModal, setShowModal, setProductList }) => {
   useEffect(() => {
     if (productImage) {
       const reader = new FileReader();
+      reader.readAsDataURL(productImage); //base 64 string
       reader.onloadend = () => {
         setImagePreview(reader.result);
       };
-      reader.readAsDataURL(productImage); //base 64 string
+      console.log({reader})
     } else {
       setImagePreview(null);
     }
-  }, [productImage]);
+    console.log({productImage,imagePreview})
+  }, [productImage,imagePreview]);
   return (
     <>
       <div className={showModal ? "modal-wrapper" : "hidden"}>
@@ -57,12 +59,12 @@ export const AddProduct = ({ showModal, setShowModal, setProductList }) => {
             placeholder="Description"
             onChange={(e) => setDescription(e.target.value)}
           />
-          <button
+          {!imagePreview && <button
             onClick={() => inputRef.current.click()}
             className="bg-blue-800 block px-5 py-2 mt-5 text-white rounded-lg"
           >
             Add image
-          </button>
+          </button>}
           <input
             ref={inputRef}
             onChange={(e) => {
