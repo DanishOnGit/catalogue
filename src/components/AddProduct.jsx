@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { ProductPreview } from "./ProductPreview";
 import { v4 as uuidv4 } from "uuid";
-export const AddProduct = ({ showModal, setShowModal, setProductList }) => {
+export const AddProduct = ({ showModal, setShowModal, setProductList,productList,itemsPerPage, setCurrentPage }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [imagePreview, setImagePreview] = useState(null);
@@ -22,6 +22,10 @@ export const AddProduct = ({ showModal, setShowModal, setProductList }) => {
       ...prev,
       { id: uuidv4(), title, description, src:imagePreview},
     ]);
+    // if(productList.length>itemsPerPage){
+    //     const newPage = Math.ceil(productList.length/itemsPerPage)
+    //     setCurrentPage(newPage)
+    // }
     setTitle("");
     setDescription("")
     setProductImage(null)
@@ -39,7 +43,12 @@ export const AddProduct = ({ showModal, setShowModal, setProductList }) => {
     } else {
       setImagePreview(null);
     }
+    if(productList.length>itemsPerPage){
+        const newPage = Math.ceil(productList.length/itemsPerPage)
+        setCurrentPage(newPage)
+    }
     console.log({productImage,imagePreview})
+    // eslint-disable-next-line
   }, [productImage,imagePreview]);
   return (
     <>
