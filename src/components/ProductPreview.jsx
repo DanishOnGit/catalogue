@@ -18,7 +18,7 @@ export const ProductPreview = ({ item, showCardPreview, setCardPreview }) => {
             : "hidden"
         }
       >
-        <button onClick={()=>setCardPreview(false)} className="absolute top-1 right-1">
+        <button onClick={()=>setCardPreview(false)} className="absolute top-2 right-2">
           <svg
             className="w-6 h-6"
             fill="currentColor"

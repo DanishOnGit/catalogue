@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import { ProductPreview } from "./ProductPreview";
 import { useDropzone } from "react-dropzone";
 import { v4 as uuidv4 } from "uuid";
+import { resetForm } from "../utils/resetform";
 export const AddProduct = ({
   showModal,
   setShowModal,
@@ -26,16 +27,16 @@ export const AddProduct = ({
   }, []);
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
-  const resetForm = () => {
-    setTitle("");
-    setDescription("");
-    setProductImage([]);
-    setShowModal(false);
-    setChoosingFile(false);
-  };
+  // const resetForm = () => {
+  //   setTitle("");
+  //   setDescription("");
+  //   setProductImage([]);
+  //   setShowModal(false);
+  //   setChoosingFile(false);
+  // };
   const cancelModal = (e) => {
     e.preventDefault();
-    resetForm();
+    resetForm(setTitle,setDescription,setProductImage,setShowModal,setChoosingFile);
   };
   const addToCatalogue = (e) => {
     e.preventDefault();
@@ -43,11 +44,11 @@ export const AddProduct = ({
       ...prev,
       { id: uuidv4(), title, description, src: productImage },
     ]);
-    resetForm();
+    resetForm(setTitle,setDescription,setProductImage,setShowModal,setChoosingFile);
+
   };
   const handleImageInput = (e) => {
     const files = e.target.files; //its iterable but not array
-
     if (files) {
       const fileArray = Array.from(files).map((file) =>
         URL.createObjectURL(file)

@@ -13,7 +13,7 @@ export const ProductCard = ({ item }) => {
   return (
     <>
       <div className="px-4 py-2">
-        <div className="mb-4">
+        <div className="mb-4 flex-grow">
           <Slider {...settings}>
             {item.src.map((item) => (
               <img
