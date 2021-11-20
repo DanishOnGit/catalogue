@@ -3,7 +3,7 @@
 This is a simple food catalogue.
 
 ## Features:
-* You can new items to the catalogue
+* You can add new items to the catalogue
 * Multiple images can be selected for a given product
 * Pagination has been implemented
 
