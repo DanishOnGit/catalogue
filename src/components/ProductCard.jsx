@@ -1,7 +1,7 @@
 import Slider from "react-slick";
 
 export const ProductCard = ({ item }) => {
-  console.log({ item });
+ 
   const settings = {
     dots: true,
     arrows:false,
