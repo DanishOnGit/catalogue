@@ -11,17 +11,17 @@ export const AddProduct = ({
 }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [imagePreview, setImagePreview] = useState(null);
-  const [productImage, setProductImage] = useState(null);
+  const [choosingFile, setChoosingFile] = useState(false);
+  const [productImage, setProductImage] = useState([]);
   const [showCardPreview, setCardPreview] = useState(false);
   const titleRef = useRef(null);
   const inputRef = useRef();
   const resetForm = () => {
     setTitle("");
     setDescription("");
-    setProductImage(null);
-    setImagePreview(null);
+    setProductImage([]);
     setShowModal(false);
+    setChoosingFile(false);
   };
   const cancelModal = () => {
     resetForm();
@@ -29,25 +29,30 @@ export const AddProduct = ({
   const addToCatalogue = () => {
     setProductList((prev) => [
       ...prev,
-      { id: uuidv4(), title, description, src: imagePreview },
+      { id: uuidv4(), title, description, src: productImage },
     ]);
     resetForm();
   };
-  useEffect(() => titleRef.current.focus(), []);
+  const handleImageInput = (e) => {
+   
+    const files = e.target.files; //its iterable but not array
 
-  useEffect(() => {
-    if (productImage) {
-      const reader = new FileReader();
-      reader.readAsDataURL(productImage); //base 64 string
-      reader.onloadend = () => {
-        setImagePreview(reader.result);
-      };
+    if (files) {
+      const fileArray = Array.from(files).map((file) =>
+        URL.createObjectURL(file)
+      );
+      
+      setProductImage((prevImages) => prevImages.concat(fileArray));
+      Array.from(files).map((file) => URL.revokeObjectURL(file));
+      setChoosingFile(true);
     } else {
-      setImagePreview(null);
+      setProductImage([]);
+      setChoosingFile(true);
     }
+    e.target.value = null;
+  };
 
-    // eslint-disable-next-line
-  }, [productImage, imagePreview]);
+  useEffect(() => titleRef.current.focus(), []);
 
   useEffect(() => {
     if (productList.length > itemsPerPage) {
@@ -67,6 +72,7 @@ export const AddProduct = ({
           }
         >
           <h2 className="mb-4 text-center font-bold text-xl">Add Product</h2>
+
           <label htmlFor="itemTitle">Title:</label>
           <input
             id="itemTitle"
@@ -86,7 +92,7 @@ export const AddProduct = ({
             placeholder="Description"
             onChange={(e) => setDescription(e.target.value)}
           />
-          {!imagePreview && (
+          {!choosingFile && (
             <button
               onClick={() => inputRef.current.click()}
               className="bg-blue-800 hover:bg-blue-900 transition duration-150 ease-in-out block px-5 py-2 mt-5 text-white rounded-lg"
@@ -109,23 +115,14 @@ export const AddProduct = ({
             </button>
           )}
           <input
-          
+            multiple
             ref={inputRef}
-            onChange={(e) => {
-              const file = e.target.files[0];
-
-              if (file && file.type.substr(0, 5) === "image") {
-                setProductImage(e.target.files[0]);
-              } else {
-                setProductImage(null);
-              }
-              e.target.value = null;
-            }}
+            onChange={(e) => handleImageInput(e)}
             type="file"
             accept="image/*"
             className="hidden px-2 py-3 my-2 w-full focus:ring-blue-800 focus:ring-2 focus:outline-none rounded-lg"
           />
-          {imagePreview && (
+          {choosingFile && (
             <button
               className="border border-blue-800 text-blue-800 my-2 rounded-lg p-2 w-full"
               onClick={() => setCardPreview(true)}
@@ -147,11 +144,11 @@ export const AddProduct = ({
           </button>
         </div>
         {showCardPreview && (
-          <div onClick={() => setCardPreview(false)} className="modal-wrapper">
+          <div className="modal-wrapper">
             <ProductPreview
               showCardPreview={showCardPreview}
               setCardPreview={setCardPreview}
-              item={{ title, description, src: imagePreview }}
+              item={{ title, description, src: productImage }}
             />
           </div>
         )}

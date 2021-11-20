@@ -4,6 +4,10 @@ import { useEffect } from "react/cjs/react.development";
 import { AddProduct } from "./components/AddProduct";
 import { Catalogue } from "./components/Catalogue";
 import { Pagination } from "./components/Pagination";
+// import "slick-carousel/slick/slick.css";
+// import "slick-carousel/slick/slick-theme.css";
+
+
 function App() {
   const [showModal, setShowModal] = useState(false);
   const [productList, setProductList] = useState([]);
