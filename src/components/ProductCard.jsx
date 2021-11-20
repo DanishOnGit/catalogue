@@ -11,8 +11,8 @@ export const ProductCard = ({ item }) => {
     slidesToScroll: 1,
   };
   return (
-    <>
-      <div className="px-4 py-2 flex flex-col">
+    
+      <div className="px-4 py-2 flex flex-col h-full">
         <div className="mb-4 flex-grow">
           <Slider {...settings}>
             {item.src.map((item) => (
@@ -30,6 +30,6 @@ export const ProductCard = ({ item }) => {
           <p>{item?.description}</p>
         </div>
       </div>
-    </>
+   
   );
 };
