@@ -10,6 +10,11 @@ export const AddProduct = ({ showModal, setShowModal, setProductList }) => {
   const titleRef = useRef(null);
   const inputRef = useRef();
   const cancelModal = () => {
+    setTitle("");
+    setDescription("")
+    setProductImage(null)
+    setImagePreview(null)
+    setShowModal(false);
     setShowModal(false);
   };
   const addToCatalogue = () => {
@@ -17,6 +22,10 @@ export const AddProduct = ({ showModal, setShowModal, setProductList }) => {
       ...prev,
       { id: uuidv4(), title, description, src:imagePreview},
     ]);
+    setTitle("");
+    setDescription("")
+    setProductImage(null)
+    setImagePreview(null)
     setShowModal(false);
   };
   useEffect(() => {
