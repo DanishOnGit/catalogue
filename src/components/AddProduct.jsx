@@ -1,7 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import { ProductPreview } from "./ProductPreview";
 import { v4 as uuidv4 } from "uuid";
-export const AddProduct = ({ showModal, setShowModal, setProductList,productList,itemsPerPage, setCurrentPage }) => {
+export const AddProduct = ({
+  showModal,
+  setShowModal,
+  setProductList,
+  productList,
+  itemsPerPage,
+  setCurrentPage,
+}) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [imagePreview, setImagePreview] = useState(null);
@@ -9,47 +16,49 @@ export const AddProduct = ({ showModal, setShowModal, setProductList,productList
   const [showCardPreview, setCardPreview] = useState(false);
   const titleRef = useRef(null);
   const inputRef = useRef();
-  const cancelModal = () => {
+  const resetForm = () => {
     setTitle("");
-    setDescription("")
-    setProductImage(null)
-    setImagePreview(null)
+    setDescription("");
+    setProductImage(null);
+    setImagePreview(null);
     setShowModal(false);
-    setShowModal(false);
+  };
+  const cancelModal = () => {
+    resetForm();
   };
   const addToCatalogue = () => {
     setProductList((prev) => [
       ...prev,
-      { id: uuidv4(), title, description, src:imagePreview},
+      { id: uuidv4(), title, description, src: imagePreview },
     ]);
-    // if(productList.length>itemsPerPage){
-    //     const newPage = Math.ceil(productList.length/itemsPerPage)
-    //     setCurrentPage(newPage)
-    // }
-    setTitle("");
-    setDescription("")
-    setProductImage(null)
-    setImagePreview(null)
-    setShowModal(false);
+    resetForm();
   };
+  useEffect(()=> titleRef.current.focus(),[])
+
   useEffect(() => {
     if (productImage) {
+      console.log("in useffect if block",productImage)
       const reader = new FileReader();
       reader.readAsDataURL(productImage); //base 64 string
       reader.onloadend = () => {
         setImagePreview(reader.result);
       };
-      console.log({reader})
+      // console.log({ reader });
     } else {
+      console.log('in ueffect else block')
       setImagePreview(null);
     }
-    if(productList.length>itemsPerPage){
-        const newPage = Math.ceil(productList.length/itemsPerPage)
-        setCurrentPage(newPage)
-    }
-    console.log({productImage,imagePreview})
+    // console.log({ productImage, imagePreview });
     // eslint-disable-next-line
-  }, [productImage,imagePreview]);
+  }, [productImage, imagePreview]);
+
+  useEffect(() => {
+    if (productList.length > itemsPerPage) {
+      const newPage = Math.ceil(productList.length / itemsPerPage);
+      setCurrentPage(newPage);
+    }
+    // eslint-disable-next-line
+  }, [productList]);
   return (
     <>
       <div className={showModal ? "modal-wrapper" : "hidden"}>
@@ -77,21 +86,28 @@ export const AddProduct = ({ showModal, setShowModal, setProductList,productList
             placeholder="Description"
             onChange={(e) => setDescription(e.target.value)}
           />
-          {!imagePreview && <button
-            onClick={() => inputRef.current.click()}
-            className="bg-blue-800 block px-5 py-2 mt-5 text-white rounded-lg"
-          >
-            Add image
-          </button>}
+          {!imagePreview && (
+            <button
+              onClick={() => inputRef.current.click()}
+              className="bg-blue-800 block px-5 py-2 mt-5 text-white rounded-lg"
+            >
+              Add image
+            </button>
+          )}
           <input
             ref={inputRef}
             onChange={(e) => {
               const file = e.target.files[0];
+              console.log("loggin e.trget.files",e.target.value)
               if (file && file.type.substr(0, 5) === "image") {
+                console.log(" file input if block")
                 setProductImage(e.target.files[0]);
               } else {
+                console.log(" file input else block")
+
                 setProductImage(null);
               }
+              e.target.value=null
             }}
             type="file"
             accept="image/*"

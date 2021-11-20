@@ -3,7 +3,11 @@ export const ProductCard = ({ item }) => {
     <>
       <div>
         <div>
-          <img className="preview-img rounded-lg" src={item?.src} alt="product-pic" />
+          <img
+            className="preview-img rounded-lg mb-2"
+            src={item?.src}
+            alt="product-pic"
+          />
         </div>
         <div>
           <p className="font-bold">{item?.title}</p>

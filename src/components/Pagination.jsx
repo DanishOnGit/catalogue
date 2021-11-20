@@ -4,7 +4,7 @@ export const Pagination = ({
   currentPage,
   setCurrentPage,
 }) => {
-  console.log({ itemsPerPage, productList });
+  // console.log({ itemsPerPage, productList });
   const pageNumbers = [];
   const pagesLength = Math.ceil(productList / itemsPerPage);
   for (let i = 1; i <= pagesLength; i++) {

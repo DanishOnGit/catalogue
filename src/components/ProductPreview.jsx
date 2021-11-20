@@ -2,7 +2,11 @@ export const ProductPreview = ({ item, showCardPreview, setCardPreview }) => {
   return (
     <>
       <div
-        className={showCardPreview ? "product-preview bg-white p-4 block z-20 break-words rounded-lg" : "hidden"}
+        className={
+          showCardPreview
+            ? "product-preview bg-white p-4 block z-20 break-words rounded-lg"
+            : "hidden"
+        }
         onClick={() => setCardPreview(false)}
       >
         <h1 className="text-center">Preview</h1>
